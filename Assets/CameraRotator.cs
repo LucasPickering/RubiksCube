@@ -16,7 +16,7 @@ public class CameraRotator : MonoBehaviour
 	private const float VELOCITY = 90;
 	private const float INCLINATION_RANGE = 60;
 	private float inclinationAngle = 90;
-	private float azimuthAngle = 90;
+	private float azimuthAngle = 0;
 
 	void Update ()
 	{
@@ -58,6 +58,7 @@ public class CameraRotator : MonoBehaviour
 		float z = DISTANCE * sinInclination * sinAzimuth;
 
 		transform.position = new Vector3 (x, y, z);
+		transform.LookAt (GameObject.Find ("Cube").transform);
 	}
 
 	private float ToRadians (float degrees)
