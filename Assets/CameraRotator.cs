@@ -13,7 +13,7 @@ public class CameraRotator : MonoBehaviour
 	/// <summary>
 	/// The angular velocity that the camera moves at, in deg/s
 	/// </summary>
-	private const float VELOCITY = 90;
+	private const float VELOCITY = 180;
 	private const float INCLINATION_RANGE = 60;
 	private float inclinationAngle = 90;
 	private float azimuthAngle = 0;
@@ -21,22 +21,22 @@ public class CameraRotator : MonoBehaviour
 	void Update ()
 	{
 		bool changed = false;
-		if (Input.GetKey (KeyCode.LeftArrow)) {
+		if (Input.GetKey (KeyCode.A)) {
 			azimuthAngle -= VELOCITY * Time.deltaTime;
 			azimuthAngle %= 360;
 			changed = true;
 		}
-		if (Input.GetKey (KeyCode.RightArrow)) {
+		if (Input.GetKey (KeyCode.D)) {
 			azimuthAngle += VELOCITY * Time.deltaTime;
 			azimuthAngle %= 360;
 			changed = true;
 		}
-		if (Input.GetKey (KeyCode.UpArrow)) {
+		if (Input.GetKey (KeyCode.W)) {
 			inclinationAngle -= VELOCITY * Time.deltaTime;
 			inclinationAngle = Math.Max (inclinationAngle, 90 - INCLINATION_RANGE);
 			changed = true;
 		}
-		if (Input.GetKey (KeyCode.DownArrow)) {
+		if (Input.GetKey (KeyCode.S)) {
 			inclinationAngle += VELOCITY * Time.deltaTime;
 			inclinationAngle = Math.Min (inclinationAngle, 90 + INCLINATION_RANGE);
 			changed = true;
