@@ -9,18 +9,21 @@ public class CubeRotator : MonoBehaviour
 	void Update ()
 	{
 		if (Input.GetKey (KeyCode.A)) {
-			Rotate(Vector3.up);
-		}
-		if (Input.GetKey (KeyCode.D)) {
-			Rotate(Vector3.down);
+			Rotate (Vector3.down);
+		} else if (Input.GetKey (KeyCode.D)) {
+			Rotate (Vector3.up);
 		}
 		if (Input.GetKey (KeyCode.W)) {
-			Rotate(Vector3.forward);
+			Rotate (Vector3.back);
+		} else if (Input.GetKey (KeyCode.S)) {
+			Rotate (Vector3.forward);
 		}
-		if (Input.GetKey (KeyCode.S)) {
-            Rotate(Vector3.back);
-        }
-    }
+		if (Input.GetKey (KeyCode.Q)) {
+			Rotate (Vector3.left);
+		} else if (Input.GetKey (KeyCode.E)) {
+			Rotate (Vector3.right);
+		}
+	}
 
 	private void Rotate (Vector3 axis)
 	{
