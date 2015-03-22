@@ -4,18 +4,14 @@ using System.Collections;
 
 public class CubeletRotator : MonoBehaviour
 {
-
-	/// <summary>
-	/// Rate of rotation for the animations, in degrees/second
-	/// </summary>
-	private const int ROTATE_RATE = 360;
-
+	
 	// cubelets[0][0][0] is the cube with the lowest x, y, and z
 	private GameObject[,,] cubelets = new GameObject[3, 3, 3];
 	private readonly GameObject[,,] tempCubelets = new GameObject[3, 3, 3];
 	private Vector3 rotatingAxis = Vector3.zero;
 	private float rotatingAngle;
 	private bool rotatingCW;
+	private float rotatingRate;
 
 	void Start ()
 	{
@@ -57,9 +53,9 @@ public class CubeletRotator : MonoBehaviour
 		} else if (rotatingAxis != Vector3.zero) {
 			float deltaAngle;
 			if (rotatingCW) {
-				deltaAngle = Math.Min (ROTATE_RATE * Time.deltaTime, 90 - rotatingAngle);
+				deltaAngle = Math.Min (rotatingRate * Time.deltaTime, 90 - rotatingAngle);
 			} else {
-				deltaAngle = Math.Max (-ROTATE_RATE * Time.deltaTime, -90 - rotatingAngle);
+				deltaAngle = Math.Max (-rotatingRate * Time.deltaTime, -90 - rotatingAngle);
 			}
 			rotatingAngle += deltaAngle;
 
@@ -74,6 +70,26 @@ public class CubeletRotator : MonoBehaviour
 				}
 			}
 		}
+	}
+	
+	/// <summary>
+	/// Rotate a side 90 degrees around the specified axis in the specified direction.
+	/// </summary>
+	/// <param name="side">Axis to rotate around</param>
+	/// <param name="clockwise">If true, rotate clockwise, otherwise rotate counter-clockwise</param>
+	/// <param name="rate">Rate of rotation, in deg/s</param> 
+	public void Rotate (Vector3 axis, bool clockwise, float rate)
+	{
+		if (!IsRotating ()) {
+			rotatingAxis = axis;
+			rotatingCW = clockwise;
+			rotatingRate = rate;
+		}
+	}
+
+	public bool IsRotating ()
+	{
+		return rotatingAxis != Vector3.zero;
 	}
 
 	private void FinishRotation ()
@@ -94,18 +110,6 @@ public class CubeletRotator : MonoBehaviour
 		
 		rotatingAxis = Vector3.zero;
 		rotatingAngle = 0;
-	}
-
-	/// <summary>
-	/// Rotate a side 90 degrees around the specified axis in the specified direction.
-	/// </summary>
-	/// <param name="side">Axis to rotate around</param>
-	/// <param name="clockwise">If true, rotate clockwise, otherwise rotate counter-clockwise</param>
-	public void Rotate (Vector3 axis, bool clockwise)
-	{
-		if (rotatingAxis == Vector3.zero) {
-			rotatingAxis = axis;
-			rotatingCW = clockwise;
-		}
+		rotatingRate = 0;
 	}
 }
