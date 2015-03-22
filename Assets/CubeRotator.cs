@@ -23,6 +23,9 @@ public class CubeRotator : MonoBehaviour
 		} else if (Input.GetKey (KeyCode.E)) {
 			Rotate (Vector3.right);
 		}
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			GetComponent<Scrambler> ().Scramble ();
+		}
 	}
 
 	private void Rotate (Vector3 axis)

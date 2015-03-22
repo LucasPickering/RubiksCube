@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CubeletInput : MonoBehaviour
@@ -27,9 +27,9 @@ public class CubeletInput : MonoBehaviour
 			break;
 		}
 		if (Input.GetMouseButtonDown (0)) {
-			transform.parent.gameObject.GetComponent<CubeletRotator> ().Rotate (axis, true);
+			transform.parent.gameObject.GetComponent<CubeletRotator> ().Rotate (axis, true, 360);
 		} else if (Input.GetMouseButtonDown (1)) {
-			transform.parent.gameObject.GetComponent<CubeletRotator> ().Rotate (axis, false);
+			transform.parent.gameObject.GetComponent<CubeletRotator> ().Rotate (axis, false, 360);
 		}
 	}
 }
