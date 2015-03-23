@@ -32,4 +32,27 @@ public class CubeletInput : MonoBehaviour
 			transform.parent.gameObject.GetComponent<CubeletRotator> ().Rotate (axis, false, 360);
 		}
 	}
+
+	void Update ()
+	{
+		Vector3 axis;
+		if (Input.GetKeyDown (KeyCode.Q)) {
+			axis = Vector3.forward;
+		} else if (Input.GetKeyDown (KeyCode.E)) {
+			axis = Vector3.back;
+		} else if (Input.GetKeyDown (KeyCode.A)) {
+			axis = Vector3.left;
+		} else if (Input.GetKeyDown (KeyCode.D)) {
+			axis = Vector3.right;
+		} else if (Input.GetKeyDown (KeyCode.W)) {
+			axis = Vector3.up;
+		} else if (Input.GetKeyDown (KeyCode.S)) {
+			axis = Vector3.down;
+		} else {
+			return;
+		}
+		transform.parent.gameObject.GetComponent<CubeletRotator> ()
+				.Rotate (axis, !Input.GetKey (KeyCode.LeftShift) && !Input.GetKey (KeyCode.RightShift), 360);
+
+	}
 }
