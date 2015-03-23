@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
-using System;
-using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
 	
 	private const float DISTANCE = 250;
-	private const float VELOCITY = 1600;
+	private const float VELOCITY = 2400;
 	private int corner = 4;
 
 	void Start ()
@@ -19,7 +17,6 @@ public class CameraController : MonoBehaviour
 	{
 		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 			corner = mod (corner + 1, 4) + corner / 4 * 4;
-			Debug.Log ("Left: " + corner);
 		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
 			corner = mod (corner - 1, 4) + corner / 4 * 4;
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
@@ -37,6 +34,11 @@ public class CameraController : MonoBehaviour
 			Mathf.Min (transform.position.z + delta, DISTANCE) : Mathf.Max (transform.position.z - delta, -DISTANCE);
 		transform.position = new Vector3 (x, y, z);
 		transform.LookAt (Vector3.zero);
+	}
+
+	public int GetCorner ()
+	{
+		return corner;
 	}
 
 	private int mod (int a, int n)
