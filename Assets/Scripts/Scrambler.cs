@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Scrambler : MonoBehaviour
 {
@@ -8,6 +7,7 @@ public class Scrambler : MonoBehaviour
 	void Update ()
 	{
 		if (iterations > 0 && !GetComponent<CubeletRotator> ().IsRotating ()) {
+			GameObject.Find ("Timer").GetComponent<Timer> ().ReadyTimer ();
 			Vector3 axis;
 			switch (Random.Range (0, 6)) {
 			case 0:
@@ -31,7 +31,7 @@ public class Scrambler : MonoBehaviour
 			}
 			GetComponent<CubeletRotator> ().Rotate (axis, Random.Range (0, 2) == 1, 2000);
 			iterations--;
-		}
+		} 
 	}
 
 	public void Scramble ()
