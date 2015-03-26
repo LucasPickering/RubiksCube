@@ -23,6 +23,7 @@ public class CubeController : MonoBehaviour
 			return;
 		}
 
+		GameObject.Find ("Timer").GetComponent<Timer> ().StartTimer ();
 		GetComponent<CubeletRotator> ().Rotate (cubeletAxis, !Input.GetKey (KeyCode.LeftShift) && !Input.GetKey (KeyCode.RightShift), 720);	
 	}
 

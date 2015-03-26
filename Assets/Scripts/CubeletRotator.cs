@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CubeletRotator : MonoBehaviour
 {
-	
-	// cubelets[0][0][0] is the cube with the lowest x, y, and z
+
+	public static GameObject[,,] initialCubelets = new GameObject[3, 3, 3];
 	private GameObject[,,] cubelets = new GameObject[3, 3, 3];
 	private readonly GameObject[,,] tempCubelets = new GameObject[3, 3, 3];
 	private Vector3 rotatingAxis = Vector3.zero;
@@ -14,35 +14,37 @@ public class CubeletRotator : MonoBehaviour
 
 	void Start ()
 	{
-		cubelets [0, 0, 0] = GameObject.Find ("Block000");
-		cubelets [0, 0, 1] = GameObject.Find ("Block001");
-		cubelets [0, 0, 2] = GameObject.Find ("Block002");
-		cubelets [0, 1, 0] = GameObject.Find ("Block010");
-		cubelets [0, 1, 1] = GameObject.Find ("Block011");
-		cubelets [0, 1, 2] = GameObject.Find ("Block012");
-		cubelets [0, 2, 0] = GameObject.Find ("Block020");
-		cubelets [0, 2, 1] = GameObject.Find ("Block021");
-		cubelets [0, 2, 2] = GameObject.Find ("Block022");
+		initialCubelets [0, 0, 0] = GameObject.Find ("Block000");
+		initialCubelets [0, 0, 1] = GameObject.Find ("Block001");
+		initialCubelets [0, 0, 2] = GameObject.Find ("Block002");
+		initialCubelets [0, 1, 0] = GameObject.Find ("Block010");
+		initialCubelets [0, 1, 1] = GameObject.Find ("Block011");
+		initialCubelets [0, 1, 2] = GameObject.Find ("Block012");
+		initialCubelets [0, 2, 0] = GameObject.Find ("Block020");
+		initialCubelets [0, 2, 1] = GameObject.Find ("Block021");
+		initialCubelets [0, 2, 2] = GameObject.Find ("Block022");
+		
+		initialCubelets [1, 0, 0] = GameObject.Find ("Block100");
+		initialCubelets [1, 0, 1] = GameObject.Find ("Block101");
+		initialCubelets [1, 0, 2] = GameObject.Find ("Block102");
+		initialCubelets [1, 1, 0] = GameObject.Find ("Block110");
+		initialCubelets [1, 1, 1] = GameObject.Find ("Block111");
+		initialCubelets [1, 1, 2] = GameObject.Find ("Block112");
+		initialCubelets [1, 2, 0] = GameObject.Find ("Block120");
+		initialCubelets [1, 2, 1] = GameObject.Find ("Block121");
+		initialCubelets [1, 2, 2] = GameObject.Find ("Block122");
+		
+		initialCubelets [2, 0, 0] = GameObject.Find ("Block200");
+		initialCubelets [2, 0, 1] = GameObject.Find ("Block201");
+		initialCubelets [2, 0, 2] = GameObject.Find ("Block202");
+		initialCubelets [2, 1, 0] = GameObject.Find ("Block210");
+		initialCubelets [2, 1, 1] = GameObject.Find ("Block211");
+		initialCubelets [2, 1, 2] = GameObject.Find ("Block212");
+		initialCubelets [2, 2, 0] = GameObject.Find ("Block220");
+		initialCubelets [2, 2, 1] = GameObject.Find ("Block221");
+		initialCubelets [2, 2, 2] = GameObject.Find ("Block222");
 
-		cubelets [1, 0, 0] = GameObject.Find ("Block100");
-		cubelets [1, 0, 1] = GameObject.Find ("Block101");
-		cubelets [1, 0, 2] = GameObject.Find ("Block102");
-		cubelets [1, 1, 0] = GameObject.Find ("Block110");
-		cubelets [1, 1, 1] = GameObject.Find ("Block111");
-		cubelets [1, 1, 2] = GameObject.Find ("Block112");
-		cubelets [1, 2, 0] = GameObject.Find ("Block120");
-		cubelets [1, 2, 1] = GameObject.Find ("Block121");
-		cubelets [1, 2, 2] = GameObject.Find ("Block122");
-
-		cubelets [2, 0, 0] = GameObject.Find ("Block200");
-		cubelets [2, 0, 1] = GameObject.Find ("Block201");
-		cubelets [2, 0, 2] = GameObject.Find ("Block202");
-		cubelets [2, 1, 0] = GameObject.Find ("Block210");
-		cubelets [2, 1, 1] = GameObject.Find ("Block211");
-		cubelets [2, 1, 2] = GameObject.Find ("Block212");
-		cubelets [2, 2, 0] = GameObject.Find ("Block220");
-		cubelets [2, 2, 1] = GameObject.Find ("Block221");
-		cubelets [2, 2, 2] = GameObject.Find ("Block222");
+		Array.Copy (initialCubelets, cubelets, initialCubelets.Length);
 	}
 
 	void Update ()
@@ -110,5 +112,22 @@ public class CubeletRotator : MonoBehaviour
 		rotatingAxis = Vector3.zero;
 		rotatingAngle = 0;
 		rotatingRate = 0;
+
+		if (Solved ()) {
+			GameObject.Find ("Timer").GetComponent<Timer> ().StopTimer ();
+		} 
+	}
+
+	private bool Solved ()
+	{
+		for (int i = 0; i < 27; i++) {
+			int x = i / 9;
+			int y = i / 3 % 3;
+			int z = i % 3;
+			if (cubelets [x, y, z] != initialCubelets [x, y, z]) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
