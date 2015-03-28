@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 	private const float DISTANCE = 250;
 	private const float VELOCITY = 2400;
 	private int corner = 4;
+	private bool flipped;
 
 	void Start ()
 	{
@@ -16,13 +17,15 @@ public class CameraController : MonoBehaviour
 	void Update ()
 	{
 		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			corner = mod (corner + 1, 4) + corner / 4 * 4;
+			corner = mod (corner + (flipped ? -1 : 1), 4) + corner / 4 * 4;
 		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			corner = mod (corner - 1, 4) + corner / 4 * 4;
+			corner = mod (corner + (flipped ? 1 : -1), 4) + corner / 4 * 4;
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
 			corner = mod (corner + 4, 8);
 		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			corner = mod (corner - 4, 8);
+		} else if (Input.GetKeyDown (KeyCode.Q) || Input.GetKeyDown (KeyCode.E)) {
+			flipped = !flipped;
 		}
 
 		float delta = VELOCITY * Time.deltaTime;
@@ -34,6 +37,9 @@ public class CameraController : MonoBehaviour
 			Mathf.Min (transform.position.z + delta, DISTANCE) : Mathf.Max (transform.position.z - delta, -DISTANCE);
 		transform.position = new Vector3 (x, y, z);
 		transform.LookAt (Vector3.zero);
+		if (flipped) {
+			transform.RotateAround (Vector3.zero, transform.forward, 180);
+		}
 	}
 
 	public int GetCorner ()
