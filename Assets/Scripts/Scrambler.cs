@@ -29,7 +29,7 @@ public class Scrambler : MonoBehaviour
 				axis = Vector3.back;
 				break;
 			}
-			GetComponent<CubeletRotator> ().Rotate (axis, Random.Range (0, 2) == 1, 2000);
+			GetComponent<CubeletRotator> ().Rotate (axis, Random.Range (0, 2) == 0, 2000);
 			iterations--;
 		} 
 	}
